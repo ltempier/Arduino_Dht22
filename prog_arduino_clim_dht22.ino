@@ -1,4 +1,4 @@
-#include "EEPROM.h"
+#include <EEPROM.h>
 #include "DHT22.h"
 
 #define DHT22_PIN 3
