@@ -6,7 +6,6 @@
 #define MIN_INTERVAL_MEASURES 2000
 #define MAX_INTERVAL_MEASURES 86400000 //1 day
 
-
 DHT22 myDHT22(DHT22_PIN);
 
 unsigned long lastTimeMesure = millis(); //reset all 49 days
@@ -103,8 +102,8 @@ void trtSerialRead(String receiptString){
   else if(receiptString.startsWith("calibratation reset",0)){
     calibrationValueTemperature=0;
     calibrationValueHumidity = 0;
-    Serial.println("reset calibratation");
     clearEEPROM();
+    Serial.println("reset calibratation");
   }
 }
 
