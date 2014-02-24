@@ -150,7 +150,6 @@ boolean getSensorData(){
     //Serial.println("Error: Polled to quick");
     break;
   }
-  lastHumidity = (lastHumidity<0) ? 0 : lastHumidity;
   return false;
 }
 
@@ -159,7 +158,7 @@ void dataTransmission(){
   Serial.print(lastTemperature-calibrationValueTemperature);
   Serial.print('C');
   Serial.print('H');
-  Serial.print(lastHumidity-calibrationValueHumidity);
+  Serial.print((lastHumidity-calibrationValueHumidity)<0 ? 0 : (lastHumidity-calibrationValueHumidity));
   Serial.println('%');
 }
 
