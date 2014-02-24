@@ -99,7 +99,7 @@ void trtSerialRead(String receiptString){
     Serial.println(")");
     writeEEPROM(receiptString);
   }
-  else if(receiptString.startsWith("calibratation reset",0)){
+  else if(receiptString.startsWith("calibration reset",0)){
     calibrationValueTemperature=0;
     calibrationValueHumidity = 0;
     clearEEPROM();
