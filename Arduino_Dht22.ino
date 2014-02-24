@@ -1,5 +1,5 @@
-#include <EEPROM.h>
 #include "DHT22.h"
+#include <EEPROM.h>
 
 #define DHT22_PIN 3
 #define TIME_BEFORE_MESURE 10
@@ -40,7 +40,7 @@ void loop(void)
 {
   if(Serial.available())
     trtSerialRead(serialRead());
-    
+
   if((millis()-lastTimeMesure) > (intervalMeasures-TIME_BEFORE_MESURE)){
     if(intervalMeasures-(millis()-lastTimeMesure) < TIME_BEFORE_MESURE)
       delay(intervalMeasures-(millis()-lastTimeMesure));
@@ -119,37 +119,38 @@ boolean getSensorData(){
     delay(MIN_INTERVAL_MEASURES-(lastTimeMesure-millis()));
   DHT22_ERROR_t errorCode = myDHT22.readData();
   lastTimeMesure=millis();
-    switch(errorCode)
+  switch(errorCode)
   {
-    case DHT_ERROR_NONE:
-      lastTemperature = myDHT22.getTemperatureC();
-      lastHumidity = myDHT22.getHumidity();
-      return true;
-      break;
-    case DHT_ERROR_CHECKSUM:
-      Serial.print("Warning: check sum error");
-      lastTemperature = myDHT22.getTemperatureC();
-      lastHumidity = myDHT22.getHumidity();
-      break;
-    case DHT_BUS_HUNG:
-      Serial.println("Error: BUS Hung");
-      break;
-    case DHT_ERROR_NOT_PRESENT:
-      Serial.println("Error: Sensor Not Connect");
-      break;
-    case DHT_ERROR_ACK_TOO_LONG:
-      Serial.println("Error: ACK time out");
-      break;
-    case DHT_ERROR_SYNC_TIMEOUT:
-      Serial.println("Error: Sync Timeout");
-      break;
-    case DHT_ERROR_DATA_TIMEOUT:
-      Serial.println("Error: Data Timeout");
-      break;
-    case DHT_ERROR_TOOQUICK:
-      //Serial.println("Error: Polled to quick");
-      break;
+  case DHT_ERROR_NONE:
+    lastTemperature = myDHT22.getTemperatureC();
+    lastHumidity = myDHT22.getHumidity();
+    return true;
+    break;
+  case DHT_ERROR_CHECKSUM:
+    Serial.print("Warning: check sum error");
+    lastTemperature = myDHT22.getTemperatureC();
+    lastHumidity = myDHT22.getHumidity();
+    break;
+  case DHT_BUS_HUNG:
+    Serial.println("Error: BUS Hung");
+    break;
+  case DHT_ERROR_NOT_PRESENT:
+    Serial.println("Error: Sensor Not Connect");
+    break;
+  case DHT_ERROR_ACK_TOO_LONG:
+    Serial.println("Error: ACK time out");
+    break;
+  case DHT_ERROR_SYNC_TIMEOUT:
+    Serial.println("Error: Sync Timeout");
+    break;
+  case DHT_ERROR_DATA_TIMEOUT:
+    Serial.println("Error: Data Timeout");
+    break;
+  case DHT_ERROR_TOOQUICK:
+    //Serial.println("Error: Polled to quick");
+    break;
   }
+  lastHumidity = (lastHumidity<0) ? 0 : lastHumidity;
   return false;
 }
 
@@ -230,5 +231,7 @@ void clearEEPROM(){
   for (int i = 0; i < 512; i++)
     EEPROM.write(i, 255);
 }
+
+
 
 
